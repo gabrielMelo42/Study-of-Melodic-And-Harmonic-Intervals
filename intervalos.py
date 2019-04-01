@@ -13,10 +13,11 @@ dictionary = {
 	"C8": 48
 }
 
-#music=converter.parse(HD/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/music21/corpus/mozart/k80movement2.mxl)
-music=converter.parse(MacBook-Pro-2/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages (5.5.0)/)
+music=converter.parse('/Library/Frameworks/Python.framework/Versions/3.7/lib/pythonIC/site-packages/music21/corpus/mozart/k155/movement2.mxl')
+print(music)
 
-maoDireita=music.getElementsByClass(stream.Part)[0].getElementsByClass(stream.Measure)
+
+'''maoDireita=music.getElementsByClass(stream.Part)[0].getElementsByClass(stream.Measure)
 maoEsquerda=music.getElementsByClass(stream.Part)[1].getElementsByClass(stream.Measure)
 
 notasComoNumeros=[]
@@ -25,7 +26,6 @@ notasComoNumerosDireita=[]
 
 for x in maoDireita:
 	notas=x.getElementsByClass()
-
 
 for x in maoDireita:
 	notasD=x.getElementsByClass(note.Note)
@@ -38,10 +38,9 @@ for z in maoEsquerda:
 		notasComoNumerosEsquerda.append(dictionary[a.nameWithOctave])
 
 intervalosHarmonicos = []
+#txt=open("intervalosHarmonicos.txt", "w+")
 
-txt=open("intervalosHarmonicos.txt", "w+")
-
-for i in range(0, len(notasComoNumerosEsquerda)-1, 2)
+	for i in range(0, len(notasComoNumerosEsquerda)-1, 2)
 	for j in range(0, len(notasComoNumerosDireita)-1,2)
 		intervalos.append(notasComoNumerosEsquerda[i]-notasComoNumerosDireita[j])
 txt=open("intervalos.txt", "w+")
@@ -52,4 +51,4 @@ for i in range(0, len(notasComoNumeros)-1, 2)
 for x in intervalos:
 	txt.write(str(x)+"\n")
 
-txt.close()
+txt.close()'''
