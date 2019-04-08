@@ -107,13 +107,29 @@ dictionary = {
 	"C8": 48
 }
 
-music=converter.parse('/Library/Frameworks/Python.framework/Versions/3.7/lib/pythonIC/site-packages/music21/corpus/BohemianRhapsody.mxl')
+music=converter.parse("/Library/Frameworks/Python.framework/Versions/3.7/lib/pythonIC/site-packages/music21/corpus/BohemianRhapsody.mxl")
 
 maoDireita=music.getElementsByClass(stream.Part)[0].getElementsByClass(stream.Measure)
 maoEsquerda=music.getElementsByClass(stream.Part)[1].getElementsByClass(stream.Measure)
 
-maoDireitaAcordes=maoDireita.chordify()
-maoEsquerdaAcordes=maoEsquerda.chordify()
+maoDireitaAcordes=music.getElementsByClass(stream.Part)[0].getElementsByClass(stream.Measure).chordify()
+maoEsquerdaAcordes=music.getElementsByClass(stream.Part)[1].getElementsByClass(stream.Measure).chordify()
+
+'''
+music.show()
+maoDireita.show()
+maoDireitaAcordes.show()
+'''
+
+for i in maoDireitaAcordes:
+	print(maoDireitaAcordes[i])
+
+for i in maoEsquerdaAcordes:
+	print(maoEsquerdaAcordes[i])
+
+i=0
+for i in maoDireita:
+	print(maoDireita)
 
 notasComoNumeros=[]
 notasComoNumerosDireita=[]
@@ -122,6 +138,7 @@ notasComoNumerosEsquerda=[]
 intervalosDireita=[]
 intervalosEsquerda=[]
 intervalosHarmonicos = []
+intervalosHarmonicos2 = []
 
 maoDireitaAcordesComoNumeros = []
 maoEsquerdaAcordesComoNumeros = []
@@ -139,6 +156,10 @@ def intervalosMelodicos(melodia, intervalo):
 	return intervalo
 
 def metodoIntervalosHarmonicos(melodia1, melodia2, intervalo):
+	for i in melodia1:
+		if(melodia2[i]>-1):
+			intervalo.append(melodia1[i]-melodia2[i])
+	return intervalo
 	'''if (len(melodia1)==len(melodia2)):
 		for i in melodia1:#podia ser melodia2, ja que tanto faz
 			intervalo.append(melodia1[i]-melodia2[i])
@@ -155,10 +176,9 @@ def metodoIntervalosHarmonicos(melodia1, melodia2, intervalo):
 			if(melodia1>-1):
 				intervalo.append(melodia1[i]-melodia2[i])
 			else:
-				break'''
-	for i in melodia1:
-		intervalo.append(melodia1[i]-melodia2[i])
-	return intervalo
+				break
+	'''
+
 
 
 
@@ -171,9 +191,28 @@ maoEsquerdaAcordesComoNumeros=transformarEmNumeros(maoEsquerdaAcordes, maoEsquer
 intervalosDireita=intervalosMelodicos(notasComoNumerosDireita, intervalosDireita)
 intervalosEsquerda=intervalosMelodicos(notasComoNumerosEsquerda, intervalosEsquerda)
 intervalosHarmonicos=metodoIntervalosHarmonicos(notasComoNumerosDireita, notasComoNumerosEsquerda, intervalosHarmonicos)
-print(intervalosDireita)
-print(intervalosEsquerda)
+
+intervalosHarmonicos2=metodoIntervalosHarmonicos(maoDireitaAcordesComoNumeros, maoEsquerdaAcordesComoNumeros, intervalosHarmonicos2)
+
+
+'''
+print(notasComoNumerosDireita)
+print()
+print(notasComoNumerosEsquerda)
+print()
 print(intervalosHarmonicos)
+print()
+print(intervalosHarmonicos2)
+'''
+
+for i in notasComoNumerosDireita:
+	if notasComoNumerosDireita[i]>-1:
+		if notasComoNumerosEsquerda[i]>-1:
+			print(notasComoNumerosDireita[i], notasComoNumerosEsquerda[i], intervalosHarmonicos[i]) 
+
+#print(maoDireitaAcordesComoNumeros)
+#print(maoEsquerdaAcordesComoNumeros)
+#print(intervalosHarmonicos2)
 
 '''
 for i in maoDireita:
@@ -246,5 +285,4 @@ for i in range(0, len(notasComoNumeros)-1, 2)
 for x in intervalos:
 	txt.write(str(x)+"\n")
 
-txt.close()
-'''
+txt.close()'''
