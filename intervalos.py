@@ -131,19 +131,15 @@ def transformarEmNumeros(comoMusica, comoNumero):
 		notas=i.getElementsByClass(note.Note)
 		for j in notas:
 			comoNumero.append(dictionary[j.nameWithOctave])
+	return comoNumero
 
 def intervalosMelodicos(melodia, intervalo):
-	for i in range(0, len(melodia)-1):
+	for i in melodia:
 		intervalo.append(melodia[i+1]-melodia[i])
+	return intervalo
 
 def metodoIntervalosHarmonicos(melodia1, melodia2, intervalo):
-	for i in range(0, len(melodia1)):
-		if(melodia2>-1):
-			intervalo.append(melodia1[i]-melodia2[i])
-		else:
-			break
-
-'''	if (len(melodia1)==len(melodia2)):
+	if (len(melodia1)==len(melodia2)):
 		for i in range(0, len(melodia1)):#podia ser melodia2, ja que tanto faz
 			intervalo.append(melodia1[i]-melodia2[i])
 
@@ -160,7 +156,8 @@ def metodoIntervalosHarmonicos(melodia1, melodia2, intervalo):
 				intervalo.append(melodia1[i]-melodia2[i])
 			else:
 				break
-'''
+	return intervalo
+
 
 
 #notasComoNumerosDireita=arr.array('i', transformarEmNumeros(maoDireita, notasComoNumerosDireita))
@@ -172,8 +169,9 @@ maoEsquerdaAcordesComoNumeros=transformarEmNumeros(maoEsquerdaAcordes, maoEsquer
 intervalosDireita=intervalosMelodicos(notasComoNumerosDireita, intervalosDireita)
 intervalosEsquerda=intervalosMelodicos(notasComoNumerosEsquerda, intervalosEsquerda)
 intervalosHarmonicos=metodoIntervalosHarmonicos(notasComoNumerosDireita, notasComoNumerosEsquerda, intervalosHarmonicos)
-
-
+print(intervalosDireita)
+print(intervalosEsquerda)
+print(intervalosHarmonicos)
 
 '''
 for i in maoDireita:
