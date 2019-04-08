@@ -1,4 +1,6 @@
 from music21 import *
+import array as arr
+
 print("Hello world")
 
 dictionary = {
@@ -107,34 +109,85 @@ dictionary = {
 
 music=converter.parse('/Library/Frameworks/Python.framework/Versions/3.7/lib/pythonIC/site-packages/music21/corpus/BohemianRhapsody.mxl')
 
-
-#music.show()
-
-
-
 maoDireita=music.getElementsByClass(stream.Part)[0].getElementsByClass(stream.Measure)
 maoEsquerda=music.getElementsByClass(stream.Part)[1].getElementsByClass(stream.Measure)
 
+maoDireitaAcordes=maoDireita.chordify()
+maoEsquerdaAcordes=maoEsquerda.chordify()
+
 notasComoNumeros=[]
 notasComoNumerosDireita=[]
-notasComoNumerosEsquerda=[] 
-
-
-for i in maoDireita:
-	notas=i.getElementsByClass(note.Note)
-	for j in notas:
-		notasComoNumerosDireita.append(dictionary[j.nameWithOctave])
-
-for i in maoEsquerda:
-	notas=i.getElementsByClass(note.Note)
-	for j in notas:
-		notasComoNumerosEsquerda.append(dictionary[j.nameWithOctave])
+notasComoNumerosEsquerda=[]
 
 intervalosDireita=[]
 intervalosEsquerda=[]
 intervalosHarmonicos = []
 
-#txt=open("intervalosHarmonicos.txt", "w+")
+maoDireitaAcordesComoNumeros = []
+maoEsquerdaAcordesComoNumeros = []
+
+def transformarEmNumeros(comoMusica, comoNumero):
+	for i in comoMusica:
+		notas=i.getElementsByClass(note.Note)
+		for j in notas:
+			comoNumero.append(dictionary[j.nameWithOctave])
+
+def intervalosMelodicos(melodia, intervalo):
+	for i in range(0, len(melodia)-1):
+		intervalo.append(melodia[i+1]-melodia[i])
+
+def metodoIntervalosHarmonicos(melodia1, melodia2, intervalo):
+	for i in range(0, len(melodia1)):
+		if(melodia2>-1):
+			intervalo.append(melodia1[i]-melodia2[i])
+		else:
+			break
+
+'''	if (len(melodia1)==len(melodia2)):
+		for i in range(0, len(melodia1)):#podia ser melodia2, ja que tanto faz
+			intervalo.append(melodia1[i]-melodia2[i])
+
+	if(len(melodia1)>len(melodia2)):
+		for i in range(0, len(melodia1)):
+			if(melodia2[i]>-1):
+				intervalo.append(melodia1[i]-melodia2[i])
+			else:
+				break
+
+	if(len(melodia1)<len(melodia2)):
+		for i in range(0, len(melodia2)):
+			if(melodia1>-1):
+				intervalo.append(melodia1[i]-melodia2[i])
+			else:
+				break
+'''
+
+
+#notasComoNumerosDireita=arr.array('i', transformarEmNumeros(maoDireita, notasComoNumerosDireita))
+#notasComoNumerosEsquerda=arr.array('i', transformarEmNumeros(maoEsquerda, notasComoNumerosEsquerda))
+notasComoNumerosDireita=transformarEmNumeros(maoDireita, notasComoNumerosDireita)
+notasComoNumerosEsquerda=transformarEmNumeros(maoEsquerda, notasComoNumerosEsquerda)
+maoDireitaAcordesComoNumeros=transformarEmNumeros(maoDireitaAcordes, maoDireitaAcordesComoNumeros)
+maoEsquerdaAcordesComoNumeros=transformarEmNumeros(maoEsquerdaAcordes, maoEsquerdaAcordesComoNumeros)
+intervalosDireita=intervalosMelodicos(notasComoNumerosDireita, intervalosDireita)
+intervalosEsquerda=intervalosMelodicos(notasComoNumerosEsquerda, intervalosEsquerda)
+intervalosHarmonicos=metodoIntervalosHarmonicos(notasComoNumerosDireita, notasComoNumerosEsquerda, intervalosHarmonicos)
+
+
+
+'''
+for i in maoDireita:
+	notas=i.getElementsByClass(note.Note)
+	for j in notas:
+		notasComoNumerosDireita.append(dictionary[j.nameWithOctave])
+
+i=0
+j=0
+
+for i in maoEsquerda:
+	notas=i.getElementsByClass(note.Note)
+	for j in notas:
+		notasComoNumerosEsquerda.append(dictionary[j.nameWithOctave])
 
 for i in range(0, len(notasComoNumerosDireita)-1):
 	intervalosDireita.append(notasComoNumerosDireita[i+1]-notasComoNumerosDireita[i])
@@ -142,9 +195,40 @@ for i in range(0, len(notasComoNumerosDireita)-1):
 for i in range(0, len(notasComoNumerosEsquerda)-1):
 	intervalosEsquerda.append(notasComoNumerosEsquerda[i+1]-notasComoNumerosEsquerda[i])
 
-print(len(intervalosDireita))
-print(len(intervalosEsquerda))
+
+for i in maoDireitaAcordes:
+	notas=i.getElementsByClass(note.Note)
+	for j in notas:
+		maoDireitaAcordesComoNumeros.append(dictionary[j.nameWithOctave])
+
+for i in maoEsquerdaAcordes:
+	notas=i.getElementsByClass(note.Note)
+	for j in notas:
+		maoEsquerdaAcordesComoNumeros.append(dictionary[j.nameWithOctave])
 '''
+'''print(len(maoDireitaAcordesComoNumeros))
+
+for i in range (0, len(maoDireitaAcordesComoNumeros)-1):
+	print(maoDireitaAcordesComoNumeros[i].pitch)
+	print(maoDireitaAcordesComoNumeros[i].pitch)
+	intervalosHarmonicos.append(maoDireitaAcordesComoNumeros[i]-maoEsquerdaAcordesComoNumeros[i])
+
+
+
+music.show()
+maoDireitaAcordes.show()
+maoEsquerdaAcordes.show()''
+for i in maoDireita:
+	notas=i.getElementsByClass(note.Note)
+	for j in notas:
+		notasComoNumerosDireita.append(dictionary[j.nameWithOctave])
+for i in range(0, len(notasComoNumerosDireita)-1):
+	intervalosDireita.append(notasComoNumerosDireita[i+1]-notasComoNumerosDireita[i])
+'''
+#for i in range(0, len)
+
+'''#txt=open("intervalosHarmonicos.txt", "w+")
+
 if len(intervalosEsquerda)>len(intervalosDireita):
 	for i in range(0, len(notasComoNumerosEsquerda)-1, 2):
 		for j in range(0, len(notasComoNumerosDireita)-1,2):
