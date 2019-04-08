@@ -139,23 +139,25 @@ def intervalosMelodicos(melodia, intervalo):
 	return intervalo
 
 def metodoIntervalosHarmonicos(melodia1, melodia2, intervalo):
-	if (len(melodia1)==len(melodia2)):
-		for i in range(0, len(melodia1)):#podia ser melodia2, ja que tanto faz
+	'''if (len(melodia1)==len(melodia2)):
+		for i in melodia1:#podia ser melodia2, ja que tanto faz
 			intervalo.append(melodia1[i]-melodia2[i])
 
 	if(len(melodia1)>len(melodia2)):
-		for i in range(0, len(melodia1)):
+		for i in melodia1:
 			if(melodia2[i]>-1):
 				intervalo.append(melodia1[i]-melodia2[i])
 			else:
 				break
 
 	if(len(melodia1)<len(melodia2)):
-		for i in range(0, len(melodia2)):
+		for i in melodia2:
 			if(melodia1>-1):
 				intervalo.append(melodia1[i]-melodia2[i])
 			else:
-				break
+				break'''
+	for i in melodia1:
+		intervalo.append(melodia1[i]-melodia2[i])
 	return intervalo
 
 
