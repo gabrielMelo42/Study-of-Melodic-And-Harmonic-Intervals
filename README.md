@@ -1,2 +1,3 @@
-# IC (Iniciação Científica)
+# IC
+Iniciação Científica
 Research
